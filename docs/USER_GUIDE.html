@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>93 Cross Fitness Gym & Spa — User Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+    padding: 40px 50px;
+    max-width: 100%;
+  }
+  
+  h1 {
+    font-size: 28pt;
+    font-weight: 900;
+    color: #111;
+    margin: 30px 0 10px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #c8ff00;
+    page-break-after: avoid;
+  }
+  
+  h2 {
+    font-size: 18pt;
+    font-weight: 800;
+    color: #222;
+    margin: 28px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e0e0e0;
+    page-break-after: avoid;
+  }
+  
+  h3 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #333;
+    margin: 20px 0 8px;
+    page-break-after: avoid;
+  }
+  
+  h4 {
+    font-size: 12pt;
+    font-weight: 600;
+    color: #444;
+    margin: 16px 0 6px;
+    page-break-after: avoid;
+  }
+  
+  p { margin: 8px 0; }
+  
+  ul, ol {
+    margin: 8px 0;
+    padding-left: 24px;
+  }
+  
+  li { margin: 4px 0; }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  
+  th {
+    background: #1a1a1a;
+    color: #c8ff00;
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #333;
+  }
+  
+  td {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  
+  tr:nth-child(even) { background: #f7f7f7; }
+  
+  code {
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-family: 'Consolas', 'Monaco', monospace;
+  }
+  
+  pre {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-size: 10pt;
+  }
+  
+  pre code {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+  }
+  
+  strong { font-weight: 700; }
+  
+  hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 24px 0;
+  }
+  
+  a { color: #0066cc; text-decoration: none; }
+  
+  blockquote {
+    border-left: 4px solid #c8ff00;
+    padding: 8px 16px;
+    margin: 12px 0;
+    background: #f9f9f0;
+  }
+  
+  /* Cover page styling */
+  body > h1:first-of-type {
+    font-size: 32pt;
+    text-align: center;
+    border-bottom: 4px solid #c8ff00;
+    padding-bottom: 16px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+  }
+  
+  @media print {
+    body { padding: 20px 30px; }
+    h2 { page-break-before: auto; }
+    table { page-break-inside: avoid; }
+    pre { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<h1>93 Cross Fitness Gym &amp; Spa — Comprehensive User Guide</h1>
+<hr>
+<h2>Table of Contents</h2>
+<ol>
+<li><a href="#1-introduction">Introduction</a></li>
+<li><a href="#2-getting-started">Getting Started</a></li>
+<li><a href="#3-public-website-marketing-pages">Public Website (Marketing Pages)</a></li>
+<li><a href="#4-authentication-system">Authentication System</a></li>
+<li><a href="#5-member-portal">Member Portal</a></li>
+<li><a href="#6-admin-panel">Admin Panel</a></li>
+<li><a href="#7-technical-architecture">Technical Architecture</a></li>
+<li><a href="#8-deployment--hosting">Deployment &amp; Hosting</a></li>
+<li><a href="#9-faq--troubleshooting">FAQ &amp; Troubleshooting</a></li>
+</ol>
+<hr>
+<h2>1. Introduction</h2>
+<h3>About the Application</h3>
+<p>93 Cross Fitness Gym &amp; Spa is a <strong>full-stack gym management web application</strong> built for managing memberships, payments, class bookings, leads, expenses, inventory, notifications, and more. It features a stunning public-facing marketing website and a powerful admin dashboard.</p>
+<h3>Key Features</h3>
+<ul>
+<li><strong>Marketing Website</strong> — 10+ beautifully designed public pages showcasing services, trainers, pricing, schedule, gallery, blog, and contact</li>
+<li><strong>Secure Authentication</strong> — Login, signup, forgot password with Supabase Auth</li>
+<li><strong>Member Portal</strong> — Members can view their dashboard, book classes, track attendance, manage profile, and view payment history</li>
+<li><strong>Admin Panel</strong> — Full gym management: members, payments, bookings, leads, notifications, expenses, inventory, and analytics reports</li>
+<li><strong>Fully Responsive</strong> — Works on desktop, tablet, and mobile</li>
+<li><strong>WhatsApp Integration</strong> — Floating WhatsApp button for instant contact</li>
+</ul>
+<h3>Live URLs</h3>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Production Site</strong></td>
+<td><a href="https://93-cross-fitness-gym.vercel.app">https://93-cross-fitness-gym.vercel.app</a></td>
+</tr>
+<tr>
+<td><strong>GitHub Repository</strong></td>
+<td><a href="https://github.com/BhaveshSolanki2611/93-Cross-Fitness-Gym">https://github.com/BhaveshSolanki2611/93-Cross-Fitness-Gym</a></td>
+</tr>
+<tr>
+<td><strong>Supabase Dashboard</strong></td>
+<td><a href="https://supabase.com/dashboard/project/oyuesibpjbgfmivsmlqz">https://supabase.com/dashboard/project/oyuesibpjbgfmivsmlqz</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2>2. Getting Started</h2>
+<h3>For Visitors (Public)</h3>
+<p>Simply visit <strong><a href="https://93-cross-fitness-gym.vercel.app">https://93-cross-fitness-gym.vercel.app</a></strong> to browse the website. No account needed to view:</p>
+<ul>
+<li>Services offered</li>
+<li>Trainer profiles</li>
+<li>Membership pricing plans</li>
+<li>Class schedule</li>
+<li>Photo gallery</li>
+<li>Blog articles</li>
+<li>Contact information</li>
+</ul>
+<h3>For Members</h3>
+<ol>
+<li>Visit the website and click <strong>&quot;Log In&quot;</strong> in the navigation or go to <code>/login</code></li>
+<li>Enter your registered email and password</li>
+<li>You&#39;ll be redirected to the <strong>Member Portal</strong> at <code>/portal</code></li>
+</ol>
+<h3>For Admin/Staff</h3>
+<ol>
+<li>Log in with your staff account at <code>/login</code></li>
+<li>You&#39;ll be redirected to the <strong>Member Portal</strong> first</li>
+<li>Navigate to <code>/admin</code> or click the <strong>&quot;ADMIN PANEL&quot;</strong> button</li>
+</ol>
+<h3>Admin Login Credentials</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Email</td>
+<td><a href="mailto:admin@93crossfitness.com">admin@93crossfitness.com</a></td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Admin@93Cross!</td>
+</tr>
+<tr>
+<td>Role</td>
+<td>Super Admin</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3. Public Website (Marketing Pages)</h2>
+<h3>3.1 Home Page (<code>/</code>)</h3>
+<p>The landing page features:</p>
+<ul>
+<li><strong>Hero section</strong> with animated heading &quot;FORGE YOUR STRONGEST SELF&quot;</li>
+<li><strong>Google Review badge</strong> — 4.8 stars with 199+ reviews</li>
+<li><strong>CTA buttons</strong> — &quot;Claim Your Free Trial&quot; and &quot;View Membership Plans&quot;</li>
+<li><strong>Why Choose Us</strong> section highlighting unique selling points</li>
+<li><strong>Services overview</strong> with cards</li>
+<li><strong>Testimonials</strong> from real members</li>
+<li><strong>WhatsApp floating button</strong> (bottom right corner)</li>
+</ul>
+<h3>3.2 About Page (<code>/about</code>)</h3>
+<ul>
+<li>Gym story and mission</li>
+<li>Team introduction</li>
+<li>Facility highlights</li>
+<li>Values and culture</li>
+</ul>
+<h3>3.3 Services Page (<code>/services</code>)</h3>
+<ul>
+<li>Grid of all available services with images</li>
+<li>Each service card links to a detailed individual page</li>
+<li><strong>Individual Service Pages</strong> (<code>/services/[slug]</code>) include:<ul>
+<li>CrossFit, HIIT, Personal Training, Weight Training</li>
+<li>Yoga, Pilates, Zumba, Kickboxing</li>
+<li>Nutrition Counseling, Spa &amp; Recovery, Sports Conditioning, Kids Fitness</li>
+</ul>
+</li>
+</ul>
+<h3>3.4 Trainers Page (<code>/trainers</code>)</h3>
+<ul>
+<li>Profiles of all 6 certified trainers:<ul>
+<li><strong>Rohit Verma</strong> — Head Coach (CrossFit, Strength)</li>
+<li><strong>Sneha Kapoor</strong> — Yoga &amp; Wellness Lead</li>
+<li><strong>Amit Sharma</strong> — HIIT &amp; Kickboxing</li>
+<li><strong>Pooja Nair</strong> — Zumba &amp; Dance Fitness</li>
+<li><strong>Karan Patel</strong> — Sports Performance</li>
+<li><strong>Divya Menon</strong> — Nutrition &amp; Pilates</li>
+</ul>
+</li>
+<li>Each card shows photo, specialization, certifications, and bio</li>
+</ul>
+<h3>3.5 Pricing Page (<code>/pricing</code>)</h3>
+<p>Four membership tiers displayed in attractive cards:</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Monthly</th>
+<th>Quarterly</th>
+<th>Annual</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Basic</strong></td>
+<td>Rs.1,999</td>
+<td>Rs.4,999</td>
+<td>Rs.17,999</td>
+</tr>
+<tr>
+<td><strong>Pro</strong></td>
+<td>Rs.2,999</td>
+<td>Rs.7,999</td>
+<td>Rs.27,999</td>
+</tr>
+<tr>
+<td><strong>Elite</strong></td>
+<td>Rs.4,999</td>
+<td>Rs.13,999</td>
+<td>Rs.49,999</td>
+</tr>
+<tr>
+<td><strong>VIP</strong></td>
+<td>Rs.9,999</td>
+<td>Rs.24,999</td>
+<td>Rs.89,999</td>
+</tr>
+</tbody></table>
+<p>Each plan details included features with checkmarks.</p>
+<h3>3.6 Schedule Page (<code>/schedule</code>)</h3>
+<ul>
+<li>Weekly class timetable organized by day</li>
+<li>Shows class name, trainer, time, and intensity level</li>
+<li>Color-coded by category</li>
+</ul>
+<h3>3.7 Gallery Page (<code>/gallery</code>)</h3>
+<ul>
+<li>Photo grid of gym facilities, equipment, classes in action</li>
+<li>High-quality images of the gym interior</li>
+</ul>
+<h3>3.8 Blog Page (<code>/blog</code>)</h3>
+<ul>
+<li>List of articles with thumbnails and excerpts</li>
+<li>Individual blog post pages (<code>/blog/[slug]</code>)</li>
+<li>Topics include fitness tips, nutrition, CrossFit vs HIIT comparisons</li>
+</ul>
+<h3>3.9 Contact Page (<code>/contact</code>)</h3>
+<ul>
+<li><strong>Contact form</strong> with fields: Name, Email, Phone, Interest (dropdown), Message</li>
+<li>Submitting creates a <strong>Lead</strong> in the admin panel automatically</li>
+<li><strong>Gym address</strong>: Sector 82, Faridabad, Haryana</li>
+<li><strong>Phone and email</strong> information displayed</li>
+</ul>
+<h3>3.10 Additional Pages</h3>
+<ul>
+<li><strong>FAQ</strong> (<code>/faq</code>) — Frequently asked questions with accordion UI</li>
+<li><strong>Join</strong> (<code>/join</code>) — Membership booking form</li>
+<li><strong>Fitness Tools</strong> (<code>/tools</code>) — BMI calculator, calorie estimator</li>
+<li><strong>Privacy Policy</strong> (<code>/privacy</code>), <strong>Terms</strong> (<code>/terms</code>), <strong>Refund Policy</strong> (<code>/refund</code>)</li>
+</ul>
+<hr>
+<h2>4. Authentication System</h2>
+<h3>4.1 Login (<code>/login</code>)</h3>
+<ul>
+<li><strong>Email + Password</strong> login form</li>
+<li>&quot;Forgot password?&quot; link for account recovery</li>
+<li>&quot;Create an account&quot; link for new users</li>
+<li>On success, redirects to Member Portal or Admin (based on role)</li>
+</ul>
+<h3>4.2 Sign Up (<code>/signup</code>)</h3>
+<ul>
+<li>Registration form: <strong>Full Name, Phone, Email, Password</strong></li>
+<li>Password validation (minimum length, complexity)</li>
+<li>Email verification via Supabase Auth</li>
+<li>New users get the <strong>&quot;member&quot;</strong> role by default</li>
+</ul>
+<h3>4.3 Forgot Password (<code>/forgot-password</code>)</h3>
+<ul>
+<li>Enter email to receive a password reset link</li>
+<li>Secure reset flow via Supabase Auth</li>
+</ul>
+<h3>4.4 Sign Out</h3>
+<ul>
+<li>Click <strong>&quot;SIGN OUT&quot;</strong> button (visible in Portal header and Admin sidebar)</li>
+<li>Clears session and redirects to login page</li>
+</ul>
+<h3>4.5 Role-Based Access</h3>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Portal Access</th>
+<th>Admin Access</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>member</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>trainer</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>receptionist</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>manager</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>admin</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>super_admin</td>
+<td>Yes</td>
+<td>Yes (full)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>5. Member Portal</h2>
+<p>The Member Portal is the authenticated area where gym members manage their account.</p>
+<h3>5.1 Overview Dashboard (<code>/portal</code>)</h3>
+<p>The main portal page shows:</p>
+<ul>
+<li><strong>Welcome message</strong> with member name</li>
+<li><strong>4 KPI cards</strong>:<ul>
+<li><strong>Membership</strong> — Current plan name and member code (e.g., GX-000001)</li>
+<li><strong>Days Remaining</strong> — Countdown to renewal with renewal date</li>
+<li><strong>Total Check-ins</strong> — Lifetime check-in count with start date</li>
+<li><strong>Status</strong> — Active/Expired with subscription type</li>
+</ul>
+</li>
+<li><strong>Recent Payments</strong> — Last payments with invoice numbers and amounts</li>
+</ul>
+<h3>5.2 Book Classes (<code>/portal/classes</code>)</h3>
+<ul>
+<li>View available classes organized by <strong>Today</strong>, <strong>Tomorrow</strong>, and upcoming days</li>
+<li>Each class card shows:<ul>
+<li>Class name (e.g., &quot;Olympic Lifting&quot;, &quot;Vinyasa Flow&quot;, &quot;Zumba&quot;)</li>
+<li>Time slot (e.g., 6:00 AM to 7:00 AM)</li>
+<li>Trainer name</li>
+<li>Intensity level (High/Medium/Low)</li>
+<li><strong>Spots remaining</strong> count</li>
+</ul>
+</li>
+<li>Click <strong>&quot;BOOK&quot;</strong> button to reserve a spot</li>
+</ul>
+<h3>5.3 Membership (<code>/portal/membership</code>)</h3>
+<ul>
+<li>View <strong>current plan</strong> details (plan name, term)</li>
+<li><strong>Validity date</strong> — when the membership expires</li>
+<li><strong>Last payment amount</strong></li>
+<li>Instructions to renew at the front desk or via WhatsApp</li>
+</ul>
+<h3>5.4 Payment History (<code>/portal/payments</code>)</h3>
+<ul>
+<li>Full table of all payments:<ul>
+<li><strong>Date</strong> — Payment date</li>
+<li><strong>Invoice</strong> — Invoice number (e.g., INV-2026-000001)</li>
+<li><strong>Method</strong> — CASH, UPI, CARD, etc.</li>
+<li><strong>Status</strong> — paid/pending/refunded</li>
+<li><strong>Amount</strong> — in INR</li>
+</ul>
+</li>
+</ul>
+<h3>5.5 Attendance (<code>/portal/attendance</code>)</h3>
+<ul>
+<li>Monthly visit count with motivational message</li>
+<li>History of all check-ins recorded by admin</li>
+<li>&quot;No check-ins recorded yet&quot; if empty</li>
+</ul>
+<h3>5.6 Profile (<code>/portal/profile</code>)</h3>
+<ul>
+<li>View and edit personal information:<ul>
+<li><strong>Email</strong> (read-only, login identifier)</li>
+<li><strong>Full Name</strong> (editable)</li>
+<li><strong>Phone</strong> (editable)</li>
+</ul>
+</li>
+<li>Click <strong>&quot;SAVE CHANGES&quot;</strong> to update</li>
+</ul>
+<hr>
+<h2>6. Admin Panel</h2>
+<p>The Admin Panel is the backbone of gym management. Only staff-role users can access it.</p>
+<h3>6.1 Dashboard (<code>/admin</code>)</h3>
+<p>The admin homepage shows a real-time overview:</p>
+<ul>
+<li><strong>6 KPI Cards</strong>:<ul>
+<li><strong>Active Members</strong> — Count of members with active subscriptions</li>
+<li><strong>Expiring in 7 Days</strong> — Members needing renewal soon</li>
+<li><strong>Revenue This Month</strong> — Total payments collected</li>
+<li><strong>Pending Bookings</strong> — Bookings awaiting confirmation</li>
+<li><strong>New Leads</strong> — Uncontacted leads from website</li>
+<li><strong>Check-ins Today</strong> — Today&#39;s attendance count</li>
+</ul>
+</li>
+<li><strong>Latest Bookings</strong> — Recent booking requests with quick actions</li>
+</ul>
+<h3>6.2 Members Management (<code>/admin/members</code>)</h3>
+<h4>Viewing Members</h4>
+<ul>
+<li><strong>Search bar</strong> — Search by name, phone, or member code</li>
+<li><strong>Status filter</strong> — Filter by All statuses, Active, Expired, etc.</li>
+<li><strong>Member table</strong> with columns: Member, Code, Plan, Valid Till, Status, Visits, Actions</li>
+</ul>
+<h4>Actions per Member</h4>
+<ul>
+<li><strong>Edit</strong> — Opens member edit form (<code>/admin/members/[id]</code>)<ul>
+<li>Edit: Full Name, Email, Phone, Member Code</li>
+<li>Change: Plan, Status, Join Date, End Date</li>
+<li>Save changes with validation</li>
+</ul>
+</li>
+<li><strong>Check-in</strong> — Record a gym visit/attendance</li>
+<li><strong>Add Member</strong> — Top-right CTA button to create new member</li>
+</ul>
+<h3>6.3 Payments (<code>/admin/payments</code>)</h3>
+<h4>Revenue Summary</h4>
+<ul>
+<li><strong>Today&#39;s Revenue</strong> — Cash collected today</li>
+<li><strong>This Month&#39;s Revenue</strong> — Running monthly total</li>
+</ul>
+<h4>Record a Payment</h4>
+<p>Form fields:</p>
+<ol>
+<li><strong>Member</strong> — Dropdown selector (all members)</li>
+<li><strong>Amount (Rs.)</strong> — Payment amount</li>
+<li><strong>Method</strong> — CASH, UPI, CARD, NEFT</li>
+</ol>
+<h4>Renew Subscription (Optional)</h4>
+<p>When recording a payment, optionally renew the member&#39;s plan:</p>
+<ol>
+<li><strong>Plan</strong> — None, Basic, Pro, Elite, VIP</li>
+<li><strong>Term</strong> — Monthly, Quarterly, Annual</li>
+<li>Click <strong>&quot;RECORD&quot;</strong> to save</li>
+</ol>
+<h4>Payment History Table</h4>
+<ul>
+<li>All payments listed with: Date, Member, Invoice, Method, Status, Amount</li>
+</ul>
+<h3>6.4 Bookings (<code>/admin/bookings</code>)</h3>
+<ul>
+<li><strong>Filter tabs</strong>: All, Pending, Confirmed, Completed, Cancelled</li>
+<li>Each booking shows:<ul>
+<li>Requested date</li>
+<li>Contact name, phone, email</li>
+<li>Type (Membership, Trial, PT, Spa)</li>
+<li>Preferred date</li>
+<li>Status badge</li>
+</ul>
+</li>
+<li><strong>Actions</strong>: Confirm, Complete, or Cancel bookings</li>
+</ul>
+<h3>6.5 Leads (<code>/admin/leads</code>)</h3>
+<ul>
+<li>Leads from the Contact page form arrive here</li>
+<li><strong>Filter tabs</strong>: All, New, Contacted, Trial Booked, Converted, Lost</li>
+<li>Each lead shows:<ul>
+<li>Received date</li>
+<li>Contact info</li>
+<li>Interest area</li>
+<li>Current status</li>
+</ul>
+</li>
+<li><strong>Actions</strong>: Update lead status, add notes</li>
+</ul>
+<h3>6.6 Notifications (<code>/admin/notifications</code>)</h3>
+<h4>Compose Notifications</h4>
+<ul>
+<li><strong>Channel</strong> — WhatsApp, Email, SMS</li>
+<li><strong>Member</strong> — Select specific member (optional)</li>
+<li><strong>To</strong> — Phone number or email auto-fills from member</li>
+<li><strong>Message</strong> — Free text message</li>
+<li>Click <strong>&quot;SEND&quot;</strong> to dispatch (simulated without API keys)</li>
+</ul>
+<h4>Bulk Fee Reminders</h4>
+<ul>
+<li>One-click button to notify members whose subscription:<ul>
+<li>Expires within 7 days</li>
+<li>Lapsed in the last 3 days</li>
+</ul>
+</li>
+</ul>
+<h4>Notification Log</h4>
+<ul>
+<li>History table: When, Member, Channel, Template, Status (sent/simulated/error)</li>
+</ul>
+<h3>6.7 Expenses (<code>/admin/expenses</code>)</h3>
+<h4>This Month Summary</h4>
+<ul>
+<li>Total expenses for the current month displayed prominently</li>
+</ul>
+<h4>Add Expense</h4>
+<ul>
+<li><strong>Category</strong> — Rent, Utilities, Equipment, Salaries, Marketing, Maintenance, Other</li>
+<li><strong>Amount (Rs.)</strong> — Expense amount</li>
+<li><strong>Date</strong> — When the expense occurred</li>
+<li><strong>Note</strong> — Optional description (e.g., &quot;AC repair&quot;)</li>
+<li>Click <strong>&quot;ADD EXPENSE&quot;</strong> to save</li>
+</ul>
+<h4>Expense Table</h4>
+<ul>
+<li>All expenses listed with: Date, Category, Note, Amount</li>
+<li><strong>Delete</strong> button to remove incorrect entries</li>
+</ul>
+<h3>6.8 Inventory (<code>/admin/inventory</code>)</h3>
+<h4>Add Item</h4>
+<ul>
+<li><strong>Item</strong> — Name (e.g., &quot;Treadmill — Matrix T50&quot;)</li>
+<li><strong>Category</strong> — Equipment, Supplements, Merchandise, Cleaning</li>
+<li><strong>Qty</strong> — Quantity count</li>
+<li><strong>Maintenance due</strong> — Next maintenance date</li>
+<li>Click <strong>&quot;ADD ITEM&quot;</strong> to save</li>
+</ul>
+<h4>Inventory Table</h4>
+<ul>
+<li>Item, Category, Status (In Stock/Low Stock), Maintenance Due, Qty</li>
+<li><strong>Delete</strong> button to remove items</li>
+</ul>
+<h3>6.9 Reports &amp; Analytics (<code>/admin/reports</code>)</h3>
+<p>Visual analytics dashboard with:</p>
+<h4>KPI Summary Cards</h4>
+<ul>
+<li><strong>Revenue YTD</strong> — Year-to-date total revenue</li>
+<li><strong>Expenses YTD</strong> — Year-to-date total expenses</li>
+<li><strong>Net YTD</strong> — Revenue minus expenses (profit)</li>
+<li><strong>Avg Payment</strong> — Average payment amount</li>
+</ul>
+<h4>Charts</h4>
+<ol>
+<li><strong>Revenue vs Expenses (6 Months)</strong> — Line/bar chart comparing income to costs over 6 months</li>
+<li><strong>New Members</strong> — Bar chart showing member sign-ups per month</li>
+<li><strong>Active Plan Mix</strong> — Donut/pie chart showing distribution of membership plans (Basic, Pro, Elite, VIP)</li>
+</ol>
+<hr>
+<h2>7. Technical Architecture</h2>
+<h3>Tech Stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Frontend</strong></td>
+<td>Next.js 16 (App Router), React 19</td>
+</tr>
+<tr>
+<td><strong>Styling</strong></td>
+<td>Tailwind CSS v4, Custom design system</td>
+</tr>
+<tr>
+<td><strong>Database</strong></td>
+<td>PostgreSQL 17.6 (via Supabase)</td>
+</tr>
+<tr>
+<td><strong>Auth</strong></td>
+<td>Supabase Auth (email/password)</td>
+</tr>
+<tr>
+<td><strong>Backend</strong></td>
+<td>Next.js Server Actions, API Routes</td>
+</tr>
+<tr>
+<td><strong>Charts</strong></td>
+<td>Recharts</td>
+</tr>
+<tr>
+<td><strong>Animations</strong></td>
+<td>Framer Motion</td>
+</tr>
+<tr>
+<td><strong>Icons</strong></td>
+<td>Lucide React</td>
+</tr>
+<tr>
+<td><strong>Hosting</strong></td>
+<td>Vercel (production), Supabase (database)</td>
+</tr>
+</tbody></table>
+<h3>Database Tables</h3>
+<table>
+<thead>
+<tr>
+<th>Table</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>profiles</td>
+<td>User profiles (linked to Supabase Auth)</td>
+</tr>
+<tr>
+<td>members</td>
+<td>Gym member records with plans and codes</td>
+</tr>
+<tr>
+<td>payments</td>
+<td>Payment records with invoices</td>
+</tr>
+<tr>
+<td>bookings</td>
+<td>Class/trial/PT bookings</td>
+</tr>
+<tr>
+<td>attendance</td>
+<td>Check-in records</td>
+</tr>
+<tr>
+<td>leads</td>
+<td>Contact form submissions</td>
+</tr>
+<tr>
+<td>expenses</td>
+<td>Operating cost tracking</td>
+</tr>
+<tr>
+<td>inventory</td>
+<td>Equipment and merchandise</td>
+</tr>
+<tr>
+<td>notifications_log</td>
+<td>Sent notification history</td>
+</tr>
+<tr>
+<td>subscriptions</td>
+<td>Subscription plan history</td>
+</tr>
+<tr>
+<td>schedule</td>
+<td>Class schedule definitions</td>
+</tr>
+</tbody></table>
+<h3>Security</h3>
+<ul>
+<li><strong>Row Level Security (RLS)</strong> enabled on all tables</li>
+<li><strong>Supabase Auth</strong> for authentication</li>
+<li><strong>Server-only</strong> database access for admin operations</li>
+<li><strong>CSRF protection</strong> via Next.js server actions</li>
+<li><strong>Environment variables</strong> for all secrets (never exposed client-side)</li>
+</ul>
+<hr>
+<h2>8. Deployment &amp; Hosting</h2>
+<h3>Production Deployment</h3>
+<p>The application is deployed on <strong>Vercel</strong> with automatic deployments:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Platform</strong></td>
+<td>Vercel</td>
+</tr>
+<tr>
+<td><strong>Project</strong></td>
+<td>bhavesh-solankis-projects/93-cross-fitness-gym</td>
+</tr>
+<tr>
+<td><strong>Framework</strong></td>
+<td>Next.js (auto-detected)</td>
+</tr>
+<tr>
+<td><strong>Region</strong></td>
+<td>Washington D.C. (iad1)</td>
+</tr>
+<tr>
+<td><strong>Build Command</strong></td>
+<td>next build</td>
+</tr>
+<tr>
+<td><strong>Output Directory</strong></td>
+<td>.next</td>
+</tr>
+</tbody></table>
+<h3>Environment Variables (Production)</h3>
+<p>All environment variables are configured in Vercel:</p>
+<ul>
+<li>DATABASE_URL — PostgreSQL connection string</li>
+<li>NEXT_PUBLIC_SUPABASE_URL — Supabase project URL</li>
+<li>NEXT_PUBLIC_SUPABASE_ANON_KEY — Supabase public key</li>
+<li>SUPABASE_SERVICE_ROLE_KEY — Supabase admin key (server-only)</li>
+<li>NEXT_PUBLIC_SITE_URL — Production URL</li>
+<li>CRON_SECRET — Auth token for scheduled cron jobs</li>
+</ul>
+<h3>Running Locally</h3>
+<pre><code># 1. Clone the repository
+git clone https://github.com/BhaveshSolanki2611/93-Cross-Fitness-Gym.git
+cd 93-Cross-Fitness-Gym
+
+# 2. Install dependencies
+npm install
+
+# 3. Create .env.local with your Supabase credentials
+
+# 4. Start development server
+npm run dev
+
+# 5. Open http://localhost:3000
+</code></pre>
+<hr>
+<h2>9. FAQ &amp; Troubleshooting</h2>
+<h3>Q: How do I add a new staff member?</h3>
+<p>A: Create a user account via the Sign Up page. Then, in the Supabase Dashboard, update their profiles table role to admin, manager, trainer, or receptionist.</p>
+<h3>Q: How do I change a member&#39;s plan?</h3>
+<p>A: Go to Admin Panel -&gt; Members -&gt; Click the edit (pencil) icon -&gt; Change the Plan dropdown -&gt; Save.</p>
+<h3>Q: How do I record a payment and renew subscription together?</h3>
+<p>A: Go to Admin Panel -&gt; Payments -&gt; Select the member, enter the amount and method. In the &quot;Renew Subscription&quot; section, select the new plan and term, then click &quot;RECORD&quot;.</p>
+<h3>Q: Why are notifications in &quot;simulated&quot; status?</h3>
+<p>A: Without WhatsApp/SMS/Email API keys configured, notifications are logged as &quot;simulated&quot;. The message content is still saved for record-keeping. Configure provider APIs for real delivery.</p>
+<h3>Q: How do I add a custom domain?</h3>
+<p>A: In Vercel Dashboard -&gt; Project Settings -&gt; Domains -&gt; Add your domain and configure DNS records.</p>
+<h3>Q: How do I update the class schedule?</h3>
+<p>A: The class schedule is currently managed via the schedule database table. Update entries in the Supabase Dashboard table editor.</p>
+<h3>Q: Contact form submissions don&#39;t appear in Leads?</h3>
+<p>A: Ensure the leads table exists in your Supabase database and that the forms.ts server action is correctly inserting records.</p>
+<hr>
+<p><strong>Copyright 2026 93 Cross Fitness Gym &amp; Spa. All rights reserved.</strong></p>
+<p><em>Document Version: 1.0 | Last Updated: July 2026</em></p>
+
+</body>
+</html>
