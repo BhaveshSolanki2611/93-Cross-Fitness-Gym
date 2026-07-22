@@ -10,6 +10,11 @@ import { siteConfig, mainNav } from "@/config/site";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/layout/logo";
 
+// Core primary navigation for the desktop top bar (7 items fit comfortably on all screens without cutoff)
+const desktopNav = mainNav.filter(
+  (item) => item.href !== "/gallery" && item.href !== "/blog"
+);
+
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
@@ -42,16 +47,16 @@ export function SiteHeader() {
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
           ? "border-b border-border bg-background/90 backdrop-blur-xl shadow-lg shadow-black/20"
-          : "border-b border-border/40 bg-background/60 backdrop-blur-md"
+          : "border-b border-border/40 bg-background/70 backdrop-blur-md"
       )}
     >
-      <div className="container-x flex h-16 items-center justify-between gap-2 md:h-20">
+      <div className="container-x flex h-16 items-center justify-between gap-3 md:h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Logo className="shrink-0" />
 
         {/* Desktop Navigation (visible 1024px lg and above) */}
-        <nav className="hidden items-center justify-center gap-0.5 lg:flex flex-1 px-2">
-          {mainNav.map((item) => {
+        <nav className="hidden items-center justify-center gap-1 lg:flex flex-1 px-4">
+          {desktopNav.map((item) => {
             const active =
               item.href === "/"
                 ? pathname === "/"
@@ -61,7 +66,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] lg:px-3 lg:py-1.5 lg:text-xs xl:text-sm font-semibold uppercase tracking-wider transition-all",
+                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-semibold uppercase tracking-wider transition-all",
                   active
                     ? "bg-primary text-primary-foreground font-bold shadow-sm"
                     : "text-muted hover:text-foreground hover:bg-surface-2/80"
@@ -73,23 +78,16 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Desktop Right Actions (visible 1024px lg and above) */}
+        {/* Desktop Right Actions (Login + Join Now) */}
         <div className="hidden items-center gap-2.5 lg:flex shrink-0">
           <Link
             href="/login"
-            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary/40 px-3 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary/40 px-3.5 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground"
           >
             <LogIn className="size-3.5" />
             <span>Login</span>
           </Link>
-          <a
-            href={`tel:${siteConfig.contact.phonePrimary}`}
-            className="hidden xl:flex items-center gap-1.5 whitespace-nowrap text-xs font-medium text-muted hover:text-foreground transition-colors"
-          >
-            <Phone className="size-3.5 text-primary" />
-            <span>{siteConfig.contact.phonePrimaryDisplay}</span>
-          </a>
-          <ButtonLink href="/join" size="sm" className="whitespace-nowrap shadow-md">
+          <ButtonLink href="/join" size="sm" className="whitespace-nowrap shadow-md font-semibold uppercase tracking-wider">
             Join Now
           </ButtonLink>
         </div>
@@ -190,5 +188,6 @@ export function SiteHeader() {
     </header>
   );
 }
+
 
 
