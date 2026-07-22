@@ -10,11 +10,6 @@ import { siteConfig, mainNav } from "@/config/site";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "@/components/layout/logo";
 
-// Core primary navigation for the desktop top bar (7 items fit comfortably on all screens without cutoff)
-const desktopNav = mainNav.filter(
-  (item) => item.href !== "/gallery" && item.href !== "/blog"
-);
-
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
@@ -46,17 +41,17 @@ export function SiteHeader() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-border bg-background/90 backdrop-blur-xl shadow-lg shadow-black/20"
-          : "border-b border-border/40 bg-background/70 backdrop-blur-md"
+          ? "border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl shadow-xl shadow-black/40"
+          : "border-b border-white/5 bg-[#08080a]/75 backdrop-blur-md"
       )}
     >
-      <div className="container-x flex h-16 items-center justify-between gap-3 md:h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 md:h-20 w-full max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Logo className="shrink-0" />
 
         {/* Desktop Navigation (visible 1024px lg and above) */}
-        <nav className="hidden items-center justify-center gap-1 lg:flex flex-1 px-4">
-          {desktopNav.map((item) => {
+        <nav className="hidden items-center justify-center gap-0.5 lg:flex flex-1 px-3 min-w-0">
+          {mainNav.map((item) => {
             const active =
               item.href === "/"
                 ? pathname === "/"
@@ -66,10 +61,10 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs xl:px-4 xl:py-2 xl:text-sm font-semibold uppercase tracking-wider transition-all",
+                  "whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] lg:text-xs xl:px-3 xl:py-1.5 xl:text-xs 2xl:px-3.5 2xl:text-sm font-semibold uppercase tracking-wider transition-all shrink-0",
                   active
-                    ? "bg-primary text-primary-foreground font-bold shadow-sm"
-                    : "text-muted hover:text-foreground hover:bg-surface-2/80"
+                    ? "bg-primary text-black font-bold shadow-sm"
+                    : "text-zinc-300 hover:text-white hover:bg-white/10"
                 )}
               >
                 {item.label}
@@ -78,25 +73,32 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Desktop Right Actions (Login + Join Now) */}
-        <div className="hidden items-center gap-2.5 lg:flex shrink-0">
+        {/* Desktop Right Actions (visible 1024px lg and above) */}
+        <div className="hidden items-center gap-2 lg:flex shrink-0">
           <Link
             href="/login"
-            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary/40 px-3.5 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-all hover:bg-primary hover:text-primary-foreground"
+            className="flex items-center gap-1.5 shrink-0 whitespace-nowrap rounded-full border border-primary/40 px-3 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-colors hover:bg-primary hover:text-black"
           >
             <LogIn className="size-3.5" />
             <span>Login</span>
           </Link>
-          <ButtonLink href="/join" size="sm" className="whitespace-nowrap shadow-md font-semibold uppercase tracking-wider">
+          <a
+            href={`tel:${siteConfig.contact.phonePrimary}`}
+            className="hidden 2xl:flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs font-medium text-zinc-400 hover:text-white transition-colors"
+          >
+            <Phone className="size-3.5 text-primary" />
+            <span>{siteConfig.contact.phonePrimaryDisplay}</span>
+          </a>
+          <ButtonLink href="/join" size="sm" className="shrink-0 whitespace-nowrap shadow-md font-bold">
             Join Now
           </ButtonLink>
         </div>
 
         {/* Mobile & Tablet Right Controls (< 1024px) */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 lg:hidden shrink-0">
           <Link
             href="/login"
-            className="flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary transition-all hover:bg-primary hover:text-primary-foreground"
+            className="flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary transition-all hover:bg-primary hover:text-black"
           >
             <LogIn className="size-3.5" />
             <span>Login</span>
@@ -104,7 +106,7 @@ export function SiteHeader() {
           <button
             type="button"
             aria-label="Open menu"
-            className="flex size-10 items-center justify-center rounded-full border border-border-strong bg-surface-2/40 text-foreground transition-colors hover:bg-surface-2"
+            className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 active:scale-95"
             onClick={() => setOpen(true)}
           >
             <Menu className="size-5" />
@@ -112,38 +114,43 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile & Tablet Drawer Sheet */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            className="fixed inset-0 z-50 lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <div
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          <div className="fixed inset-0 z-[100] lg:hidden">
+            {/* Dark Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md"
               onClick={() => setOpen(false)}
             />
+
+            {/* Sliding Menu Panel */}
             <motion.div
-              className="absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col overflow-y-auto border-l border-border bg-surface/95 p-6 backdrop-blur-2xl shadow-2xl"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.35 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 z-[101] flex w-[85%] max-w-xs sm:max-w-sm flex-col bg-[#0c0c0e] border-l border-white/15 p-6 shadow-2xl overflow-y-auto"
             >
-              <div className="mb-6 flex items-center justify-between">
+              {/* Drawer Header */}
+              <div className="mb-6 flex items-center justify-between pb-4 border-b border-white/10">
                 <Logo />
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="flex size-10 items-center justify-center rounded-full border border-border-strong text-foreground transition-colors hover:bg-surface-2"
+                  className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-colors hover:bg-white/15 active:scale-95"
                   onClick={() => setOpen(false)}
                 >
                   <X className="size-5" />
                 </button>
               </div>
-              <nav className="flex flex-col gap-1.5">
+
+              {/* Navigation Items */}
+              <nav className="flex flex-col gap-2">
                 {mainNav.map((item) => {
                   const active =
                     item.href === "/"
@@ -154,35 +161,38 @@ export function SiteHeader() {
                       key={item.href}
                       href={item.href}
                       className={cn(
-                        "rounded-xl px-4 py-3 text-base font-display uppercase tracking-wider transition-colors",
+                        "rounded-xl px-4 py-3 text-base font-display uppercase tracking-wider transition-all flex items-center justify-between",
                         active
-                          ? "bg-primary text-primary-foreground font-bold"
-                          : "text-foreground hover:bg-surface-2"
+                          ? "bg-primary text-black font-bold border border-primary shadow-md"
+                          : "text-white hover:bg-white/10 hover:text-primary"
                       )}
                     >
-                      {item.label}
+                      <span>{item.label}</span>
+                      {active && <span className="size-2 rounded-full bg-black" />}
                     </Link>
                   );
                 })}
               </nav>
-              <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-border mt-6">
-                <ButtonLink href="/login" variant="outline" size="lg" className="w-full justify-center">
+
+              {/* Bottom Action CTAs */}
+              <div className="mt-8 flex flex-col gap-3 pt-6 border-t border-white/10">
+                <ButtonLink href="/login" variant="outline" size="lg" className="w-full justify-center text-primary border-primary/40 hover:bg-primary hover:text-black">
                   <LogIn className="size-4" /> Member Login
                 </ButtonLink>
-                <ButtonLink href="/join" size="lg" className="w-full justify-center">
+                <ButtonLink href="/join" size="lg" className="w-full justify-center font-bold">
                   Join Now
                 </ButtonLink>
                 <ButtonLink
                   href={`tel:${siteConfig.contact.phonePrimary}`}
                   variant="outline"
                   size="lg"
-                  className="w-full justify-center"
+                  className="w-full justify-center text-zinc-300 border-white/20 hover:bg-white/10"
                 >
                   <Phone className="size-4" /> Call Us
                 </ButtonLink>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </header>
