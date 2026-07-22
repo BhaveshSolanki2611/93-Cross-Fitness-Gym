@@ -80,13 +80,6 @@ export function SiteHeader() {
             <LogIn className="size-4" />
             Login
           </Link>
-          <a
-            href={`tel:${siteConfig.contact.phonePrimary}`}
-            className="flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground"
-          >
-            <Phone className="size-4" />
-            {siteConfig.contact.phonePrimaryDisplay}
-          </a>
           <ButtonLink href="/join" size="sm">
             Join Now
           </ButtonLink>
