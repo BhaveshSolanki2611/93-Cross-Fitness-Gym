@@ -30,6 +30,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const setupIssue = params.get("reason") === "setup";
   const [serverError, setServerError] = React.useState<string | null>(null);
   const [signupDone, setSignupDone] = React.useState(false);
+  const justVerified = params.get("verified") === "1";
 
   const isSignup = mode === "signup";
   // For login mode we validate a subset; make optional fields tolerated so a
@@ -81,6 +82,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         <p className="rounded-xl border border-ember/40 bg-ember/10 p-3 text-sm text-ember">
           Authentication isn&apos;t fully configured yet. The site owner needs to add
           the Supabase API keys.
+        </p>
+      )}
+      {justVerified && !isSignup && (
+        <p className="rounded-xl border border-primary/40 bg-primary/10 p-3 text-sm text-primary">
+          ✅ Email verified successfully! You can now log in.
         </p>
       )}
       {isSignup && (

@@ -41,6 +41,18 @@ export async function createMember(input: unknown): Promise<ActionResult> {
   const supabase = (await getSupabaseServer())!;
   const d = parsed.data;
 
+  // Auto-link to an existing profile if the email matches a registered user.
+  let profileId: string | null = null;
+  if (d.email) {
+    const { data: matchedProfile } = await supabase
+      .from("profiles")
+      .select("id")
+      .ilike("email", d.email)
+      .limit(1)
+      .single();
+    if (matchedProfile) profileId = matchedProfile.id;
+  }
+
   const { data: member, error } = await supabase
     .from("members")
     .insert({
@@ -48,6 +60,7 @@ export async function createMember(input: unknown): Promise<ActionResult> {
       phone: d.phone,
       email: d.email || null,
       gender: d.gender || null,
+      profile_id: profileId,
       created_by: session.user.id,
     })
     .select("id")
@@ -94,6 +107,9 @@ export async function createMember(input: unknown): Promise<ActionResult> {
 
   revalidatePath("/admin/members");
   revalidatePath("/admin");
+  revalidatePath("/portal");
+  revalidatePath("/portal/payments");
+  revalidatePath("/portal/membership");
   return { ok: true, id: member.id };
 }
 
@@ -237,6 +253,9 @@ export async function recordPayment(input: unknown): Promise<ActionResult> {
 
   revalidatePath("/admin/payments");
   revalidatePath("/admin");
+  revalidatePath("/portal");
+  revalidatePath("/portal/payments");
+  revalidatePath("/portal/membership");
   return { ok: true };
 }
 

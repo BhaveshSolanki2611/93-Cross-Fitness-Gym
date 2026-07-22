@@ -75,6 +75,9 @@ export function NewMemberForm() {
         <Field label="Email (optional)" error={errors.email?.message}>
           <input {...register("email")} className={inputCls} />
         </Field>
+        <p className="-mt-2 text-xs text-muted-2">
+          If this email matches a registered account, the member portal will be auto-linked.
+        </p>
         <Field label="Gender (optional)">
           <select {...register("gender")} className={inputCls}>
             <option value="">—</option>

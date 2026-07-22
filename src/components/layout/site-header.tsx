@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { siteConfig, mainNav } from "@/config/site";
 import { ButtonLink } from "@/components/ui/button";
@@ -73,6 +73,13 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/login"
+            className="flex items-center gap-2 rounded-full border border-primary/40 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+          >
+            <LogIn className="size-4" />
+            Login
+          </Link>
           <a
             href={`tel:${siteConfig.contact.phonePrimary}`}
             className="flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground"
@@ -137,6 +144,9 @@ export function SiteHeader() {
                 ))}
               </nav>
               <div className="mt-auto flex flex-col gap-3 pt-6">
+                <ButtonLink href="/login" variant="outline" size="lg" className="w-full">
+                  <LogIn className="size-4" /> Member Login
+                </ButtonLink>
                 <ButtonLink href="/join" size="lg" className="w-full">
                   Join Now
                 </ButtonLink>

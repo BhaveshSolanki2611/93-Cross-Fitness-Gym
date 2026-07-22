@@ -33,6 +33,15 @@ export async function signIn(input: unknown): Promise<AuthResult> {
   if (error) {
     return { ok: false, error: "Invalid email or password." };
   }
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user && !user.email_confirmed_at) {
+    // Sign them out — they haven't verified their email yet.
+    await supabase.auth.signOut();
+    return {
+      ok: false,
+      error: "Please verify your email before logging in. Check your inbox for the confirmation link.",
+    };
+  }
   revalidatePath("/", "layout");
   return { ok: true };
 }
@@ -50,10 +59,14 @@ export async function signUp(input: unknown): Promise<AuthResult> {
     };
   }
   const { email, password, fullName, phone } = parsed.data;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   const { error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName, phone } },
+    options: {
+      data: { full_name: fullName, phone },
+      emailRedirectTo: `${siteUrl}/login?verified=1`,
+    },
   });
   if (error) {
     return { ok: false, error: error.message };
