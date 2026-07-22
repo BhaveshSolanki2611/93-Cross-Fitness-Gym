@@ -15,8 +15,7 @@ export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
-  // Close the mobile menu on route change — adjust state during render
-  // (React's recommended pattern) rather than in an effect.
+  // Close the mobile menu on route change
   const [prevPath, setPrevPath] = React.useState(pathname);
   if (pathname !== prevPath) {
     setPrevPath(pathname);
@@ -42,14 +41,15 @@ export function SiteHeader() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          ? "border-b border-border bg-background/85 backdrop-blur-xl shadow-lg"
           : "border-b border-transparent bg-transparent"
       )}
     >
       <div className="container-x flex h-16 items-center justify-between gap-4 md:h-20">
-        <Logo />
+        <Logo className="shrink-0" />
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        {/* Desktop Navigation (XL screens and above for perfect 1-line alignment) */}
+        <nav className="hidden items-center gap-1 xl:flex">
           {mainNav.map((item) => {
             const active =
               item.href === "/"
@@ -60,10 +60,10 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium uppercase tracking-wide transition-colors",
+                  "whitespace-nowrap rounded-full px-3 py-1.5 text-xs xl:px-3.5 xl:py-2 xl:text-sm font-medium uppercase tracking-wider transition-all",
                   active
-                    ? "text-primary"
-                    : "text-muted hover:text-foreground"
+                    ? "bg-primary/10 text-primary border border-primary/20"
+                    : "text-muted hover:text-foreground hover:bg-surface-2/60"
                 )}
               >
                 {item.label}
@@ -72,89 +72,112 @@ export function SiteHeader() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        {/* Desktop Right Action Buttons */}
+        <div className="hidden items-center gap-3 xl:flex shrink-0">
           <Link
             href="/login"
-            className="flex items-center gap-2 rounded-full border border-primary/40 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-primary/40 px-3.5 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
           >
-            <LogIn className="size-4" />
+            <LogIn className="size-3.5" />
             Login
           </Link>
           <a
             href={`tel:${siteConfig.contact.phonePrimary}`}
-            className="flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground"
+            className="flex items-center gap-1.5 whitespace-nowrap text-xs xl:text-sm font-medium text-muted hover:text-foreground transition-colors"
           >
-            <Phone className="size-4" />
+            <Phone className="size-3.5 text-primary" />
             {siteConfig.contact.phonePrimaryDisplay}
           </a>
-          <ButtonLink href="/join" size="sm">
+          <ButtonLink href="/join" size="sm" className="whitespace-nowrap shadow-md">
             Join Now
           </ButtonLink>
         </div>
 
-        <button
-          type="button"
-          aria-label="Open menu"
-          className="flex size-11 items-center justify-center rounded-full border border-border-strong text-foreground lg:hidden"
-          onClick={() => setOpen(true)}
-        >
-          <Menu className="size-5" />
-        </button>
+        {/* Mobile & Tablet Right Controls (XL:hidden) */}
+        <div className="flex items-center gap-2.5 xl:hidden">
+          <Link
+            href="/login"
+            className="flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary transition-all hover:bg-primary hover:text-primary-foreground"
+          >
+            <LogIn className="size-3.5" />
+            <span>Login</span>
+          </Link>
+          <button
+            type="button"
+            aria-label="Open menu"
+            className="flex size-10 items-center justify-center rounded-full border border-border-strong bg-surface-2/40 text-foreground transition-colors hover:bg-surface-2 sm:size-11"
+            onClick={() => setOpen(true)}
+          >
+            <Menu className="size-5" />
+          </button>
+        </div>
       </div>
 
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-50 lg:hidden"
+            className="fixed inset-0 z-50 xl:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <div
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/80 backdrop-blur-md"
               onClick={() => setOpen(false)}
             />
             <motion.div
-              className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-surface p-6"
+              className="absolute right-0 top-0 flex h-full w-[88%] max-w-sm flex-col overflow-y-auto border-l border-border bg-surface/95 p-6 backdrop-blur-2xl shadow-2xl"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
+              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.35 }}
             >
-              <div className="mb-8 flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between">
                 <Logo />
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="flex size-11 items-center justify-center rounded-full border border-border-strong"
+                  className="flex size-10 items-center justify-center rounded-full border border-border-strong text-foreground transition-colors hover:bg-surface-2"
                   onClick={() => setOpen(false)}
                 >
                   <X className="size-5" />
                 </button>
               </div>
-              <nav className="flex flex-col gap-1">
-                {mainNav.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-xl px-4 py-3 text-lg font-display uppercase tracking-wide text-foreground hover:bg-surface-2"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+              <nav className="flex flex-col gap-1.5">
+                {mainNav.map((item) => {
+                  const active =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        "rounded-xl px-4 py-3 text-base font-display uppercase tracking-wider transition-colors",
+                        active
+                          ? "bg-primary/10 text-primary border border-primary/20"
+                          : "text-foreground hover:bg-surface-2"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </nav>
-              <div className="mt-auto flex flex-col gap-3 pt-6">
-                <ButtonLink href="/login" variant="outline" size="lg" className="w-full">
+              <div className="mt-auto flex flex-col gap-3 pt-6 border-t border-border mt-6">
+                <ButtonLink href="/login" variant="outline" size="lg" className="w-full justify-center">
                   <LogIn className="size-4" /> Member Login
                 </ButtonLink>
-                <ButtonLink href="/join" size="lg" className="w-full">
+                <ButtonLink href="/join" size="lg" className="w-full justify-center">
                   Join Now
                 </ButtonLink>
                 <ButtonLink
                   href={`tel:${siteConfig.contact.phonePrimary}`}
                   variant="outline"
                   size="lg"
-                  className="w-full"
+                  className="w-full justify-center"
                 >
                   <Phone className="size-4" /> Call Us
                 </ButtonLink>
@@ -166,3 +189,4 @@ export function SiteHeader() {
     </header>
   );
 }
+
