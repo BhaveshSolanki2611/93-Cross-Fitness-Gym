@@ -15,7 +15,8 @@ export function SiteHeader() {
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
-  // Close the mobile menu on route change
+  // Close the mobile menu on route change — adjust state during render
+  // (React's recommended pattern) rather than in an effect.
   const [prevPath, setPrevPath] = React.useState(pathname);
   if (pathname !== prevPath) {
     setPrevPath(pathname);
@@ -41,16 +42,14 @@ export function SiteHeader() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled
-          ? "border-b border-white/10 bg-[#08080a]/95 backdrop-blur-xl shadow-xl shadow-black/40"
-          : "border-b border-white/5 bg-[#08080a]/75 backdrop-blur-md"
+          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-16 md:h-20 w-full max-w-[1400px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* Brand Logo */}
-        <Logo className="shrink-0" />
+      <div className="container-x flex h-16 items-center justify-between gap-4 md:h-20">
+        <Logo />
 
-        {/* Desktop Navigation (visible 1024px lg and above) */}
-        <nav className="hidden items-center justify-center gap-0.5 lg:flex flex-1 px-3 min-w-0">
+        <nav className="hidden items-center gap-1 lg:flex">
           {mainNav.map((item) => {
             const active =
               item.href === "/"
@@ -61,10 +60,10 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "whitespace-nowrap rounded-full px-2.5 py-1 text-[11px] lg:text-xs xl:px-3 xl:py-1.5 xl:text-xs 2xl:px-3.5 2xl:text-sm font-semibold uppercase tracking-wider transition-all shrink-0",
+                  "rounded-full px-4 py-2 text-sm font-medium uppercase tracking-wide transition-colors",
                   active
-                    ? "bg-primary text-black font-bold shadow-sm"
-                    : "text-zinc-300 hover:text-white hover:bg-white/10"
+                    ? "text-primary"
+                    : "text-muted hover:text-foreground"
                 )}
               >
                 {item.label}
@@ -73,131 +72,97 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Desktop Right Actions (visible 1024px lg and above) */}
-        <div className="hidden items-center gap-2 lg:flex shrink-0">
+        <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/login"
-            className="flex items-center gap-1.5 shrink-0 whitespace-nowrap rounded-full border border-primary/40 px-3 py-1.5 text-xs xl:text-sm font-semibold uppercase tracking-wider text-primary transition-colors hover:bg-primary hover:text-black"
+            className="flex items-center gap-2 rounded-full border border-primary/40 px-4 py-2 text-sm font-semibold uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
           >
-            <LogIn className="size-3.5" />
-            <span>Login</span>
+            <LogIn className="size-4" />
+            Login
           </Link>
           <a
             href={`tel:${siteConfig.contact.phonePrimary}`}
-            className="hidden 2xl:flex items-center gap-1.5 shrink-0 whitespace-nowrap text-xs font-medium text-zinc-400 hover:text-white transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-muted hover:text-foreground"
           >
-            <Phone className="size-3.5 text-primary" />
-            <span>{siteConfig.contact.phonePrimaryDisplay}</span>
+            <Phone className="size-4" />
+            {siteConfig.contact.phonePrimaryDisplay}
           </a>
-          <ButtonLink href="/join" size="sm" className="shrink-0 whitespace-nowrap shadow-md font-bold">
+          <ButtonLink href="/join" size="sm">
             Join Now
           </ButtonLink>
         </div>
 
-        {/* Mobile & Tablet Right Controls (< 1024px) */}
-        <div className="flex items-center gap-2 lg:hidden shrink-0">
-          <Link
-            href="/login"
-            className="flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary transition-all hover:bg-primary hover:text-black"
-          >
-            <LogIn className="size-3.5" />
-            <span>Login</span>
-          </Link>
-          <button
-            type="button"
-            aria-label="Open menu"
-            className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white transition-colors hover:bg-white/20 active:scale-95"
-            onClick={() => setOpen(true)}
-          >
-            <Menu className="size-5" />
-          </button>
-        </div>
+        <button
+          type="button"
+          aria-label="Open menu"
+          className="flex size-11 items-center justify-center rounded-full border border-border-strong text-foreground lg:hidden"
+          onClick={() => setOpen(true)}
+        >
+          <Menu className="size-5" />
+        </button>
       </div>
 
-      {/* Mobile & Tablet Drawer Sheet */}
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[100] lg:hidden">
-            {/* Dark Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md"
+          <motion.div
+            className="fixed inset-0 z-50 lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
               onClick={() => setOpen(false)}
             />
-
-            {/* Sliding Menu Panel */}
             <motion.div
+              className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col bg-surface p-6"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 z-[101] flex w-[85%] max-w-xs sm:max-w-sm flex-col bg-[#0c0c0e] border-l border-white/15 p-6 shadow-2xl overflow-y-auto"
+              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.4 }}
             >
-              {/* Drawer Header */}
-              <div className="mb-6 flex items-center justify-between pb-4 border-b border-white/10">
+              <div className="mb-8 flex items-center justify-between">
                 <Logo />
                 <button
                   type="button"
                   aria-label="Close menu"
-                  className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white transition-colors hover:bg-white/15 active:scale-95"
+                  className="flex size-11 items-center justify-center rounded-full border border-border-strong"
                   onClick={() => setOpen(false)}
                 >
                   <X className="size-5" />
                 </button>
               </div>
-
-              {/* Navigation Items */}
-              <nav className="flex flex-col gap-2">
-                {mainNav.map((item) => {
-                  const active =
-                    item.href === "/"
-                      ? pathname === "/"
-                      : pathname.startsWith(item.href);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={cn(
-                        "rounded-xl px-4 py-3 text-base font-display uppercase tracking-wider transition-all flex items-center justify-between",
-                        active
-                          ? "bg-primary text-black font-bold border border-primary shadow-md"
-                          : "text-white hover:bg-white/10 hover:text-primary"
-                      )}
-                    >
-                      <span>{item.label}</span>
-                      {active && <span className="size-2 rounded-full bg-black" />}
-                    </Link>
-                  );
-                })}
+              <nav className="flex flex-col gap-1">
+                {mainNav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-xl px-4 py-3 text-lg font-display uppercase tracking-wide text-foreground hover:bg-surface-2"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </nav>
-
-              {/* Bottom Action CTAs */}
-              <div className="mt-8 flex flex-col gap-3 pt-6 border-t border-white/10">
-                <ButtonLink href="/login" variant="outline" size="lg" className="w-full justify-center text-primary border-primary/40 hover:bg-primary hover:text-black">
+              <div className="mt-auto flex flex-col gap-3 pt-6">
+                <ButtonLink href="/login" variant="outline" size="lg" className="w-full">
                   <LogIn className="size-4" /> Member Login
                 </ButtonLink>
-                <ButtonLink href="/join" size="lg" className="w-full justify-center font-bold">
+                <ButtonLink href="/join" size="lg" className="w-full">
                   Join Now
                 </ButtonLink>
                 <ButtonLink
                   href={`tel:${siteConfig.contact.phonePrimary}`}
                   variant="outline"
                   size="lg"
-                  className="w-full justify-center text-zinc-300 border-white/20 hover:bg-white/10"
+                  className="w-full"
                 >
                   <Phone className="size-4" /> Call Us
                 </ButtonLink>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
   );
 }
-
-
-
